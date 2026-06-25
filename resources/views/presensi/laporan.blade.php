@@ -23,7 +23,7 @@
                 <div class="col-6">
                     <div class="card">
                         <div class="card-body">
-                            <form action="/presensi/cetaklaporan" target="_blank" method="POST">
+                            <form action="/presensi/cetaklaporan" id="frmLaporan" target="_blank" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12">
@@ -116,3 +116,46 @@
         </div>
     </div>
 @endsection
+
+@push('myscript')
+    <script>
+        $(function() {
+            $("#frmLaporan").submit(function(e) {
+                var bulan = $("#bulan").val();
+                var tahun = $("#tahun").val();
+                var nik = $("#nik").val();
+                if (bulan == "") {
+                    Swal.fire({
+                        title: 'Peringatan!',
+                        text: 'Bulan Harus Dipilih',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        $("#bulan").focus();
+                    });
+                    return false;
+                } else if (tahun == "") {
+                    Swal.fire({
+                        title: 'Peringatan!',
+                        text: 'Tahun Harus Dipilih.',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        $("#tahun").focus();
+                    });
+                    return false;
+                } else if (nik == "") {
+                    Swal.fire({
+                        title: 'Peringatan!',
+                        text: 'Nama Karyawan Harus Dipilih.',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        $("#nik").focus();
+                    });
+                    return false;
+                }
+            })
+        })
+    </script>
+@endpush

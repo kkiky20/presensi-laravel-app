@@ -7,7 +7,7 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        Karyawan
+                        Data Master
                     </div>
                     <h2 class="page-title">
                         Data Departemen
@@ -280,25 +280,26 @@
             });
 
             $('.delete-confirm').click(function(e) {
+                e.preventDefault();
+
                 var form = $(this).closest('form');
-                e.preventDefault(),
-                    Swal.fire({
-                        title: "Apakah Anda Yakin Menghapus Data Ini?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Ya, Hapus"
-                    }).then((result) => {
-                        if (result.isConfirmed)
-                            form.submit();
-                        Swal.fire({
-                            title: "Hapus!",
-                            text: "Data Berhasil Di Hapus",
-                            icon: "success"
-                        });
-                    });
-            })
+
+                Swal.fire({
+                    title: "Apakah Anda Yakin Menghapus Data Ini?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya, Hapus",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+
+                });
+            });
 
             $("#frmKaryawan").submit(function() {
                 var nik = $("#nik").val();

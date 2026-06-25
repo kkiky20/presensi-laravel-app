@@ -23,6 +23,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {{-- Date Picker --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+{{-- Face Api JS --}}
+<script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
+{{-- App Min JS --}}
+<script src="/js/face-api.min.js"></script>
 <script>
     am4core.ready(function() {
 

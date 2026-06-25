@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('lokasi_in');
             $table->text('lokasi_out')->nullable();
 
+
             $table->timestamps();
 
             $table->foreign('nik')

@@ -7,7 +7,7 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        Laporan
+                        Konfigurasi
                     </div>
                     <h2 class="page-title">
                         Konfigurasi Lokasi

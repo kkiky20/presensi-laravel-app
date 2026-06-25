@@ -7,7 +7,7 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        Karyawan
+                        Data Master
                     </div>
                     <h2 class="page-title">
                         Data Karyawan
@@ -110,6 +110,7 @@
                                                 <th>No.HP</th>
                                                 <th>Foto</th>
                                                 <th>Departemen</th>
+                                                <th>Cabang</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -134,6 +135,7 @@
                                                         @endif
                                                     </td>
                                                     <td>{{ $d->nama_dept }}</td>
+                                                    <td>{{ $d->kode_cabang }}</td>
                                                     <td>
                                                         <div class="btn-group">
                                                             <a href="#" class="edit btn btn-info btn-sm"
@@ -149,6 +151,20 @@
                                                                     <path
                                                                         d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415" />
                                                                     <path d="M16 5l3 3" />
+                                                                </svg>
+                                                            </a>
+                                                            <a href="/konfigurasi/{{ $d->nik }}/setjamkerja"
+                                                                class="btn btn-success btn-sm">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path
+                                                                        d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065" />
+                                                                    <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                                                                 </svg>
                                                             </a>
                                                             <form action="/karyawan/{{ $d->nik }}/delete"
@@ -295,8 +311,17 @@
                                 <select type="text" name="kode_dept" id="kode_dept" class="form-select">
                                     <option value="">Departemen</option>
                                     @foreach ($departemen as $d)
-                                        <option {{ Request('kode_dept') == $d->kode_dept ? 'selected' : '' }}
-                                            value="{{ $d->kode_dept }}">{{ $d->nama_dept }}</option>
+                                        <option value="{{ $d->kode_dept }}">{{ $d->nama_dept }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <select type="text" name="kode_cabang" id="kode_cabang" class="form-select">
+                                    <option value="">Cabang</option>
+                                    @foreach ($cabang as $d)
+                                        <option value="{{ $d->kode_cabang }}">{{ strtoupper($d->nama_cabang) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -368,25 +393,26 @@
             });
 
             $('.delete-confirm').click(function(e) {
+                e.preventDefault();
+
                 var form = $(this).closest('form');
-                e.preventDefault(),
-                    Swal.fire({
-                        title: "Apakah Anda Yakin Menghapus Data Ini?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Ya, Hapus"
-                    }).then((result) => {
-                        if (result.isConfirmed)
-                            form.submit();
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Data Berhasil Dihapus",
-                            icon: "success"
-                        });
-                    });
-            })
+
+                Swal.fire({
+                    title: "Apakah Anda Yakin Menghapus Data Ini?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya, Hapus",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+
+                });
+            });
 
             $("#frmKaryawan").submit(function() {
                 var nik = $("#nik").val();

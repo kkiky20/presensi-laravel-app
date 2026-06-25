@@ -75,7 +75,7 @@
     </tr>
 @empty
     <tr>
-        <td colspan="9" class="text-center">Data presensi tidak ditemukan</td>
+        <td colspan="9" class="text-center">Data Presensi Tidak Ditemukan.</td>
     </tr>
 @endforelse
 
