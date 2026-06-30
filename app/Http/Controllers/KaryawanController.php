@@ -64,6 +64,8 @@ class KaryawanController extends Controller
                 if ($request->hasFile('foto')) {
                     $folderPath = "public/uploads/karyawan/";
                     $request->file('foto')->storeAs($folderPath, $foto);
+                } else {
+                    $message = "Hubungi IT";
                 }
                 return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
             }
@@ -81,7 +83,7 @@ class KaryawanController extends Controller
         $departemen = DB::table('departemen')->get();
         $cabang = DB::table('cabang')->orderBy('kode_cabang')->get();
         $karyawan = DB::table('karyawan')->where('nik', $nik)->first();
-        return view('karyawan.edit', compact('departemen', 'karyawan','cabang'));
+        return view('karyawan.edit', compact('departemen', 'karyawan', 'cabang'));
     }
 
     public function update($nik, Request $request)
@@ -122,8 +124,7 @@ class KaryawanController extends Controller
                 return Redirect::back()->with(['success' => 'Data Berhasil Diupdate']);
             }
         } catch (Exception $e) {
-            dd($e);
-            // return Redirect::back()->with(['warning' => 'Data Gagal Diupdate']);
+            return Redirect::back()->with(['warning' => 'Data Gagal Diupdate']);
         }
     }
 

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('lokasi_in');
             $table->text('lokasi_out')->nullable();
 
+            $table->char('kode_jam_kerja', 4)->nullable();
 
             $table->timestamps();
 

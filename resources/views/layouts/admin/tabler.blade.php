@@ -54,31 +54,31 @@
     </div>
 
     <!-- Libs JS -->
-    <script src="{{ asset('tabler') }}/dist/libs/apexcharts/dist/apexcharts.min.js?1674944402" defer></script>
-    <script src="{{ asset('tabler') }}/dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1674944402" defer></script>
-    <script src="{{ asset('tabler') }}/dist/libs/jsvectormap/dist/maps/world.js?1674944402" defer></script>
-    <script src="{{ asset('tabler') }}/dist/libs/jsvectormap/dist/maps/world-merc.js?1674944402" defer></script>
+    <script src="{{ asset('tabler') }}/dist/libs/apexcharts/dist/apexcharts.min.js?1674944402"></script>
+    <script src="{{ asset('tabler') }}/dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1674944402"></script>
+    <script src="{{ asset('tabler') }}/dist/libs/jsvectormap/dist/maps/world.js?1674944402"></script>
+    <script src="{{ asset('tabler') }}/dist/libs/jsvectormap/dist/maps/world-merc.js?1674944402"></script>
+
     <!-- Tabler Core -->
-    <script src="{{ asset('tabler') }}/dist/js/tabler.min.js?1674944402" defer></script>
-    <script src="{{ asset('tabler') }}/dist/js/demo.min.js?1674944402" defer></script>
+    <script src="{{ asset('tabler') }}/dist/js/tabler.min.js?1674944402"></script>
+    <script src="{{ asset('tabler') }}/dist/js/demo.min.js?1674944402"></script>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
-
-    {{-- Sweet Alert --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    {{-- JQuery Datepicker --}}
+    <!-- JQuery (hanya 1x) -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
+    <!-- Sweet Alert -->
+    <script src="{{ asset('template') }}/assets/js/lib/sweetalert.js"></script>
+
+    <!-- JQuery Mask -->
+    <script src="{{ asset('template') }}/assets/js/lib/jquery.mask.min.js"></script>
+
+    <!-- JQuery Datepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
     </script>
 
-    {{-- Leaflet JS --}}
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-        
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     @stack('myscript')
 </body>
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->char('kode_dept', 20);
             $table->char('kode_cabang', 20)->nullable();
             $table->string('password', 100);
+            
             $table->string('remember_token', 255)->nullable();
             $table->timestamps();
         });

@@ -371,17 +371,13 @@
                     <div class="dropdown-menu {{ request()->is(['konfigurasi', 'konfigurasi/*']) ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item {{ request()->is(['konfigurasi', 'konfigurasi/lokasikantor']) ? 'active' : '' }}"
-                                    href="/konfigurasi/lokasikantor">
-                                    Lokasi Kantor
-                                </a>
-                            </div>
-                        </div>
-                        <div class="dropdown-menu-columns">
-                            <div class="dropdown-menu-column">
-                                <a class="dropdown-item {{ request()->is(['konfigurasi', 'konfigurasi/lokasikantor']) ? 'active' : '' }}"
+                                <a class="dropdown-item {{ request()->is(['konfigurasi', 'konfigurasi/jamkerja']) ? 'active' : '' }}"
                                     href="/konfigurasi/jamkerja">
                                     Jam Kerja
+                                </a>
+                                <a class="dropdown-item {{ request()->is(['konfigurasi', 'konfigurasi/jamkerjadept']) ? 'active' : '' }}"
+                                    href="/konfigurasi/jamkerjadept">
+                                    Jam Kerja Departemen
                                 </a>
                             </div>
                         </div>

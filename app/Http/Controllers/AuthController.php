@@ -12,7 +12,7 @@ class AuthController extends Controller
         if (Auth::guard('karyawan')->attempt(['nik' => $request->nik, 'password' => $request->password])) {
             return redirect('/dashboard');
         } else {
-            return redirect('/')->with(['warning' => 'NIK / Password yang Anda Masukkan Salah']);
+            return redirect('/')->with(['warning' => 'NIK atau Password yang Anda Masukkan Salah']);
         }
     }
 
@@ -37,7 +37,7 @@ class AuthController extends Controller
         if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect('/admin/dashboardadmin');
         } else {
-            return redirect('/admin')->with(['warning' => 'NIK / Password yang Anda Masukkan Salah']);
+            return redirect('/admin')->with(['warning' => 'Email atau Password yang Anda Masukkan Salah']);
         }
     }
 }

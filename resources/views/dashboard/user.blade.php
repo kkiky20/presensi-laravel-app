@@ -207,7 +207,7 @@
             </div>
             <div class="tab-content mt-2" style="margin-bottom:100px;">
                 <div class="tab-pane fade show active" id="home" role="tabpanel">
-                    <ul class="listview image-listview">
+                    {{-- <ul class="listview image-listview">
                         @foreach ($historibulanini as $d)
                             @php
                                 $path = Storage::url('uploads/absensi/' . $d->foto_in);
@@ -228,7 +228,69 @@
                             </li>
                         @endforeach
 
-                    </ul>
+                    </ul> --}}
+
+
+                    <style>
+                        .historicontent {
+                            display: flex;
+
+                        }
+
+                        .datapresensi {
+                            margin-left: 10px;
+                        }
+                    </style>
+                    @foreach ($historibulanini as $d)
+                        <div class="card historicard mb-1">
+                            <div class="card-body">
+                                <div class="historicontent">
+                                    <div class="historidetail">
+                                        <div class="iconpresensi">
+                                            <ion-icon name="finger-print-outline" style="font-size: 32px;"
+                                                class="text-success"></ion-icon>
+                                        </div>
+                                        <div class="datapresensi">
+                                            <h3 style="line-height: 3px">{{ $d->nama_jam_kerja }} </h3>
+                                            <h4>{{ date('d-m-Y', strtotime($d->tgl_presensi)) }} </h4>
+                                            <span>
+                                                {!! $d->jam_in != null ? date('H:i', strtotime($d->jam_in)) : '<span class="badge bg-warning">Belum Scan</span>' !!}
+                                                {!! $d->jam_out != null
+                                                    ? date('H:i', strtotime($d->jam_out))
+                                                    : '<span class="badge bg-warning">Belum Scan</span>' !!}
+                                            </span>
+
+                                            <div id="keterangan" class="mt-2">
+                                                @php
+                                                    // Jam Ketika Absen
+                                                    $jam_in = date('H:i', strtotime($d->jam_in));
+                                                    $jam_masuk = date('H:i', strtotime($d->jam_masuk));
+                                                    // Jam Jadwal Masuk
+                                                    $jadwal_jam_masuk = $d->tgl_presensi . ' ' . $jam_masuk;
+                                                    $jam_presensi = $d->tgl_presensi . ' ' . $jam_in;
+                                                @endphp
+                                                @if ($jam_in > $jam_masuk)
+                                                    @php
+                                                        $jmlterlambat = hitungjamterlambat(
+                                                            $jadwal_jam_masuk,
+                                                            $jam_presensi,
+                                                        );
+                                                        $jmlterlambatdesimal = hitungjamterlambatdesimal(
+                                                            $jadwal_jam_masuk,
+                                                            $jam_presensi,
+                                                        );
+                                                    @endphp
+                                                    <span class="badge bg-danger">Terlambat {{ $jmlterlambat }}</span>
+                                                @else
+                                                    <span class="badge bg-success">Tepat Waktu</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel">
                     <ul class="listview image-listview">

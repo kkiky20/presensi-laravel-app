@@ -95,7 +95,7 @@
                                                                     <path d="M16 5l3 3" />
                                                                 </svg>
                                                             </a>
-                                                            <form action="/konfigurasi/{{ $d->kode_jam_kerja }}/delete"
+                                                            <form action="/konfigurasi/jamkerja/{{ $d->kode_jam_kerja }}/delete"
                                                                 style="margin-left: 5px" method="POST">
                                                                 @csrf
                                                                 <a class="btn btn-danger btn-sm delete-confirm">
@@ -320,6 +320,9 @@
 @push('myscript')
     <script>
         $(function() {
+
+            $("#awal_jam_masuk, #jam_masuk, #akhir_jam_masuk, #jam_pulang").mask("00:00");
+
             $("#btnTambahJK").click(function() {
                 $("#modal-inputjk").modal("show");
             });
