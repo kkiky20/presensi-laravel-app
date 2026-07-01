@@ -158,3 +158,9 @@
         </div>
     </div>
 @endsection
+
+{{-- @extends('layouts.template.app')
+
+@section('content')
+
+@endsection --}}

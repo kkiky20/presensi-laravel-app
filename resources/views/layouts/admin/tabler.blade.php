@@ -65,12 +65,12 @@
 
     <!-- JQuery (hanya 1x) -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+{{--
     <!-- Sweet Alert -->
     <script src="{{ asset('template') }}/assets/js/lib/sweetalert.js"></script>
 
     <!-- JQuery Mask -->
-    <script src="{{ asset('template') }}/assets/js/lib/jquery.mask.min.js"></script>
+    <script src="{{ asset('template') }}/assets/js/lib/jquery.mask.min.js"></script> --}}
 
     <!-- JQuery Datepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
