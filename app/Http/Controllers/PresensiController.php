@@ -58,14 +58,30 @@ class PresensiController extends Controller
         $hariini = date("Y-m-d");
         $namahari = $this->gethari();
         $nik = Auth::guard('karyawan')->user()->nik;
+        $kode_dept = Auth::guard('karyawan')->user()->kode_dept;
         $cek = DB::table('presensi')->where('tgl_presensi', $hariini)->where('nik', $nik)->count();
         $kode_cabang = Auth::guard('karyawan')->user()->kode_cabang;
         $lok_kantor = DB::table('cabang')->where('kode_cabang', $kode_cabang)->first();
-        $jamkerja = DB::table('konfigurasi_jamkerja')->where('nik', $nik)
+        $jamkerja = DB::table('konfigurasi_jamkerja')
             ->join('jam_kerja', 'konfigurasi_jamkerja.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
+            ->where('nik', $nik)
             ->where('hari', $namahari)->first();
 
-        return view('presensi.create', compact('cek', 'lok_kantor', 'jamkerja'));
+        if ($jamkerja == null) {
+            $jamkerja = DB::table('konfigurasi_jk_dept_detail')
+                ->join('konfigurasi_jk_dept', 'konfigurasi_jk_dept_detail.kode_jk_dept', '=', 'konfigurasi_jk_dept.kode_jk_dept')
+                ->join('jam_kerja', 'konfigurasi_jk_dept_detail.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
+                ->where('kode_dept', $kode_dept)
+                ->where('kode_cabang', $kode_cabang)
+                ->where('hari', $namahari)->first();
+        }
+
+
+        if ($jamkerja == null) {
+            return view('presensi.notifjadwal');
+        } else {
+            return view('presensi.create', compact('cek', 'lok_kantor', 'jamkerja'));
+        }
     }
 
     public function store(Request $request)
@@ -188,6 +204,10 @@ class PresensiController extends Controller
         $no_hp = $request->no_hp;
         $password = Hash::make($request->password);
         $karyawan = DB::table('karyawan')->where('nik', $nik)->first();
+
+        $request->validate([
+            'foto' => 'required}image|mimes:png,jpg,jpeg|max:500'
+        ]);
 
         if ($request->hasFile('foto')) {
             $foto = $nik . "." . $request->file('foto')->getClientOriginalExtension();
@@ -443,6 +463,7 @@ class PresensiController extends Controller
         $pengajuanizin->appends($request->all());
         return view('presensi.pengajuanizin', compact('pengajuanizin'));
     }
+    
 
     public function approvepengajuan(Request $request)
     {

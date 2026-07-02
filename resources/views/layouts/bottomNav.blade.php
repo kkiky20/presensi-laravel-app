@@ -12,7 +12,7 @@
             <strong>Histori</strong>
         </div>
     </a>
-    <a href="/presensi/create" class="item {{ request()->is('presensi/create') ? 'active' : '' }}">
+    <a href="/presensi/create" class="item">
         <div class="col">
             <div class="action-button large">
                 <ion-icon name="camera" role="img" class="md hydrated" aria-label="add outline"></ion-icon>

@@ -2,9 +2,7 @@
 <!-- Bootstrap-->
 <script src="{{ asset('template') }}/assets/js/lib/popper.min.js"></script>
 <script src="{{ asset('template') }}/assets/js/lib/bootstrap.min.js"></script>
-<!-- Ionicons -->
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 <!-- Owl Carousel -->
 <script src="{{ asset('template') }}/assets/js/plugins/owl-carousel/owl.carousel.min.js"></script>
 <!-- jQuery Circle Progress -->
@@ -27,6 +25,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
 {{-- App Min JS --}}
 <script src="/js/face-api.min.js"></script>
+
+<!-- Ionicons -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
+
 <script>
     am4core.ready(function() {
 

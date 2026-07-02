@@ -49,7 +49,7 @@
         @include('layouts.admin.navbar')
         <div class="page-wrapper">
             @yield('content')
-            @include('layouts.admin.footer')
+            {{-- @include('layouts.admin.footer') --}}
         </div>
     </div>
 
@@ -65,12 +65,12 @@
 
     <!-- JQuery (hanya 1x) -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-{{--
+
     <!-- Sweet Alert -->
-    <script src="{{ asset('template') }}/assets/js/lib/sweetalert.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- JQuery Mask -->
-    <script src="{{ asset('template') }}/assets/js/lib/jquery.mask.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <!-- JQuery Datepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">

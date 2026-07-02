@@ -10,7 +10,7 @@
                         Data Master
                     </div>
                     <h2 class="page-title">
-                        Data Karyawan
+                        Data Cuti
                     </h2>
                 </div>
 
@@ -40,7 +40,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <a href="#" class="btn btn-primary" id="btnTambahkaryawan">
+                                    <a href="#" class="btn btn-primary" id="btnTambahCuti">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
@@ -53,30 +53,18 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="row mt-2">
+                            {{-- <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/karyawan" method="GET">
+                                    <form action="/cuti" method="GET">
                                         <div class="row">
-                                            <div class="col-6">
+                                            <div class="col-10">
                                                 <div class="form-group">
-                                                    <input type="text" name="nama_karyawan" id="nama_karyawan"
-                                                        class="form-control" placeholder="Nama Karyawan"
-                                                        value="{{ Request('nama_karyawan') }}">
+                                                    <input type="text" name="nama_cuti" id="nama_cuti"
+                                                        class="form-control" placeholder="Cuti"
+                                                        value="{{ Request('nama_cuti') }}">
                                                 </div>
                                             </div>
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <select type="text" name="kode_dept" id="kode_dept"
-                                                        class="form-select">
-                                                        <option value="">Departemen</option>
-                                                        @foreach ($departemen as $d)
-                                                            <option
-                                                                {{ Request('kode_dept') == $d->kode_dept ? 'selected' : '' }}
-                                                                value="{{ $d->kode_dept }}">{{ $d->nama_dept }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
+
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-primary">
@@ -97,49 +85,31 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row mt-2">
                                 <div class="col-12">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>NIK</th>
-                                                <th>Nama</th>
-                                                <th>Jabatan</th>
-                                                <th>No.HP</th>
-                                                <th>Foto</th>
-                                                <th>Departemen</th>
-                                                <th>Cabang</th>
+                                                <th>Kode Cuti</th>
+                                                <th>Nama Cuti</th>
+                                                <th>Jumlah Hari</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($karyawan as $d)
-                                                @php
-                                                    $path = Storage::url('uploads/karyawan/' . $d->foto);
-                                                @endphp
+                                            @foreach ($cuti as $d)
                                                 <tr>
-                                                    <td>{{ $loop->iteration + $karyawan->firstItem() - 1 }}</td>
-                                                    <td>{{ $d->nik }}</td>
-                                                    <td>{{ $d->nama_lengkap }}</td>
-                                                    <td>{{ $d->jabatan }}</td>
-                                                    <td>{{ $d->no_hp }}</td>
-                                                    <td>
-                                                        @if (empty($d->foto))
-                                                            <img src="{{ asset('template/assets/img/foto.png') }}"
-                                                                alt="Default" class="avatar">
-                                                        @else
-                                                            <img src="{{ asset('storage/uploads/karyawan/' . $d->foto) }}"
-                                                                alt="Foto Karyawan" class="avatar">
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ $d->nama_dept }}</td>
-                                                    <td>{{ $d->kode_cabang }}</td>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $d->kode_cuti }}</td>
+                                                    <td>{{ $d->nama_cuti }}</td>
+                                                    <td>{{ $d->jml_hari }}</td>
+
                                                     <td>
                                                         <div class="btn-group">
                                                             <a href="#" class="edit btn btn-info btn-sm"
-                                                                nik="{{ $d->nik }}">
+                                                                kode_cuti="{{ $d->kode_cuti }}">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                     height="24" viewBox="0 0 24 24" fill="none"
                                                                     stroke="currentColor" stroke-width="2"
@@ -153,21 +123,7 @@
                                                                     <path d="M16 5l3 3" />
                                                                 </svg>
                                                             </a>
-                                                            <a href="/konfigurasi/{{ $d->nik }}/setjamkerja"
-                                                                class="btn btn-success btn-sm">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" stroke-width="2"
-                                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <path
-                                                                        d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065" />
-                                                                    <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-                                                                </svg>
-                                                            </a>
-                                                            <form action="/karyawan/{{ $d->nik }}/delete"
+                                                            <form action="/cuti/{{ $d->kode_cuti }}/delete"
                                                                 style="margin-left: 5px" method="POST">
                                                                 @csrf
                                                                 <a class="btn btn-danger btn-sm delete-confirm">
@@ -189,13 +145,12 @@
                                                                 </a>
                                                             </form>
                                                         </div>
-
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    {{ $karyawan->links('vendor.pagination.bootstrap-5') }}
+
                                 </div>
                             </div>
                         </div>
@@ -205,15 +160,15 @@
             </div>
         </div>
     </div>
-    <div class="modal modal-blur fade" id="modal-inputkaryawan" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-inputcuti" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Data Karyawan</h5>
+                    <h5 class="modal-title">Tambah Data Cuti</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/karyawan/store" method="POST" id="frmKaryawan" enctype="multipart/form-data">
+                    <form action="/cuti/store" method="POST" id="frmCuti">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -235,8 +190,8 @@
                                             <path d="M19 11l0 2" />
                                         </svg>
                                     </span>
-                                    <input type="text" maxlength="6" value="" id="nik"
-                                        class="form-control" name="nik" placeholder="NIK">
+                                    <input type="text" value="" id="kode_cuti" class="form-control"
+                                        name="kode_cuti" placeholder="Kode Cuti">
                                 </div>
                             </div>
                         </div>
@@ -254,8 +209,8 @@
                                             <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                                         </svg>
                                     </span>
-                                    <input type="text" value="" id="nama_lengkap" class="form-control"
-                                        name="nama_lengkap" placeholder="Nama Lengkap">
+                                    <input type="text" value="" id="nama_cuti" class="form-control"
+                                        name="nama_cuti" placeholder="Nama Cuti">
                                 </div>
                             </div>
                         </div>
@@ -267,65 +222,19 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-device-analytics">
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-user">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path
-                                                d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -10" />
-                                            <path d="M7 20l10 0" />
-                                            <path d="M9 16l0 4" />
-                                            <path d="M15 16l0 4" />
-                                            <path d="M8 12l3 -3l2 2l3 -3" />
+                                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                                         </svg>
                                     </span>
-                                    <input type="text" id="jabatan" value="" class="form-control"
-                                        name="jabatan" placeholder="Jabatan">
+                                    <input type="text" value="" id="jml_hari" class="form-control"
+                                        name="jml_hari" placeholder="Jumlah Hari">
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="input-icon mb-3">
-                                    <span class="input-icon-addon">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path
-                                                d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
-                                        </svg>
-                                    </span>
-                                    <input type="text" value="" id="no_hp" class="form-control"
-                                        name="no_hp" placeholder="No. HP">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-1">
-                            <div class="col-12">
-                                <input type="file" name="foto" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <select type="text" name="kode_dept" id="kode_dept" class="form-select">
-                                    <option value="">Departemen</option>
-                                    @foreach ($departemen as $d)
-                                        <option value="{{ $d->kode_dept }}">{{ $d->nama_dept }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <select type="text" name="kode_cabang" id="kode_cabang" class="form-select">
-                                    <option value="">Cabang</option>
-                                    @foreach ($cabang as $d)
-                                        <option value="{{ $d->kode_cabang }}">{{ strtoupper($d->nama_cabang) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+
+
                         <div class="row mt-3">
                             <div class="col-12">
                                 <div class="form-group">
@@ -352,11 +261,11 @@
     </div>
 
     {{-- Modal Edit --}}
-    <div class="modal modal-blur fade" id="modal-editkaryawan" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal modal-blur fade" id="modal-editcuti" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Data Karyawan</h5>
+                    <h5 class="modal-title">Edit Data Cuti</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="loadeditform">
@@ -371,27 +280,25 @@
 @push('myscript')
     <script>
         $(function() {
-            $("#nik").mask('000000');
-            $("#no_hp").mask('000000000000');
-            $("#btnTambahkaryawan").click(function() {
-                $("#modal-inputkaryawan").modal("show");
+            $("#btnTambahCuti").click(function() {
+                $("#modal-inputcuti").modal("show");
             });
 
             $(".edit").click(function() {
-                var nik = $(this).attr('nik');
+                var kode_cuti = $(this).attr('kode_cuti');
                 $.ajax({
                     type: 'POST',
-                    url: '/karyawan/edit',
+                    url: '/cuti/edit',
                     cache: false,
                     data: {
                         _token: "{{ csrf_token() }}",
-                        nik: nik
+                        kode_cuti: kode_cuti
                     },
                     success: function(respond) {
                         $("#loadeditform").html(respond);
                     }
                 })
-                $("#modal-editkaryawan").modal("show");
+                $("#modal-editcuti").modal("show");
             });
 
             $('.delete-confirm').click(function(e) {
@@ -411,70 +318,44 @@
 
                     if (result.isConfirmed) {
                         form.submit();
-                        Swal.fire(
-                            'Deleted!',
-                            'Data Berhasil Dihapus',
-                            'success'
-                        )
                     }
 
                 });
             });
 
-            $("#frmKaryawan").submit(function() {
-                var nik = $("#nik").val();
-                var nama_lengkap = $("#nama_lengkap").val();
-                var jabatan = $("#jabatan").val();
-                var no_hp = $("#no_hp").val();
-                var kode_dept = $("#frmKaryawan").find("#kode_dept").val();
-                if (nik == "") {
+            $("#frmCuti").submit(function() {
+                var kode_cuti = $("#kode_cuti").val();
+                var nama_cuti = $("#nama_cuti").val();
+                var jml_hari = $("#jml_hari").val();
+
+                if (kode_cuti == "") {
                     Swal.fire({
                         title: 'Peringatan!',
-                        text: 'NIK Harus Diisi.',
+                        text: 'Kode Cuti Harus Diisi.',
                         icon: 'warning',
                         confirmButtonText: 'OK'
                     }).then((result) => {
-                        $("#nik").focus();
+                        $("#kode_cuti").focus();
                     });
                     return false;
-                } else if (nama_lengkap == '') {
+                } else if (nama_cuti == '') {
                     Swal.fire({
                         title: 'Peringatan!',
-                        text: 'Nama Lengkap Harus Diisi.',
+                        text: 'Nama Cuti Harus Diisi.',
                         icon: 'warning',
                         confirmButtonText: 'OK'
                     }).then((result) => {
-                        $("#nama_lengkap").focus();
+                        $("#nama_cuti").focus();
                     });
                     return false;
-                } else if (jabatan == '') {
+                } else if (jml_hari == '' || jml_hari == 0) {
                     Swal.fire({
                         title: 'Peringatan!',
-                        text: 'Jabatan Harus Diisi.',
+                        text: 'Jumlah Hari Harus Diisi.',
                         icon: 'warning',
                         confirmButtonText: 'OK'
                     }).then((result) => {
-                        $("#jabatan").focus();
-                    });
-                    return false;
-                } else if (no_hp == '') {
-                    Swal.fire({
-                        title: 'Peringatan!',
-                        text: 'No. HP Harus Diisi.',
-                        icon: 'warning',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        $("#no_hp").focus();
-                    });
-                    return false;
-                } else if (kode_dept == '') {
-                    Swal.fire({
-                        title: 'Peringatan!',
-                        text: 'Departemen Harus Diisi.',
-                        icon: 'warning',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        $("#kode_dept").focus();
+                        $("#jml_hari").focus();
                     });
                     return false;
                 }

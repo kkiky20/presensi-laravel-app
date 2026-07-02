@@ -74,11 +74,11 @@
     <div class="row">
         <div class="col">
             @if ($cek > 0)
-                <button id="takeabsen" class="btn btn-danger btn-block"><ion-icon name="camera-outline"></ion-icon> Absen
+                <button id="takeabsen" class="btn btn-danger btn-block"><ion-icon name="camera"></ion-icon> Absen
                     Pulang
                 </button>
             @else
-                <button id="takeabsen" class="btn btn-primary btn-block"><ion-icon name="camera-outline"></ion-icon> Absen
+                <button id="takeabsen" class="btn btn-primary btn-block"><ion-icon name="camera"></ion-icon> Absen
                     Masuk
                 </button>
             @endif

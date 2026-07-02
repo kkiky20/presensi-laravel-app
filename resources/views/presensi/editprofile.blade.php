@@ -29,6 +29,12 @@
                     {{ $messageerror }}
                 </div>
             @endif
+
+            @error('foto')
+                <div class="alert alert-danger">
+                    <p>{{ $message }}</p>
+                </div>
+            @enderror
         </div>
     </div>
     <form action="/presensi/{{ $karyawan->nik }}/updateprofile" method="POST" enctype="multipart/form-data">

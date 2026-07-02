@@ -179,7 +179,7 @@ class KonfigurasiController extends Controller
             ->join('cabang', 'konfigurasi_jk_dept.kode_cabang', '=', 'cabang.kode_cabang')
             ->join('departemen', 'konfigurasi_jk_dept.kode_dept', '=', 'departemen.kode_dept')
             ->get();
-        return view('konfigurasi.jamkerjadept' , compact('jamkerjadept'));
+        return view('konfigurasi.jamkerjadept', compact('jamkerjadept'));
     }
 
     public function createjamkerjadept()
@@ -220,6 +220,66 @@ class KonfigurasiController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect('/konfigurasi/jamkerjadept')->with(['warning' => 'Data Gagal Disimpan!']);
+        }
+    }
+
+    public function editjamkerjadept($kode_jk_dept)
+    {
+
+        $jam_kerja = DB::table('jam_kerja')->orderBy('nama_jam_kerja')->get();
+        $cabang = DB::table('cabang')->get();
+        $departemen = DB::table('departemen')->get();
+        $jamkerjadept = DB::table('konfigurasi_jk_dept')->where('kode_jk_dept', $kode_jk_dept)->first();
+        $jamkerjadept_detail = DB::table('konfigurasi_jk_dept_detail')->where('kode_jk_dept', $kode_jk_dept)->get();
+        return view('konfigurasi.editjamkerjadept', compact('jam_kerja', 'cabang', 'departemen', 'jamkerjadept', 'jamkerjadept_detail'));
+    }
+
+    public function updatejamkerjadept($kode_jk_dept, Request $request)
+    {
+        $hari = $request->hari;
+        $kode_jam_kerja = $request->kode_jam_kerja;
+
+        DB::beginTransaction();
+        try {
+
+            // Hapus Data Jam Kerja Sebelumnya
+            DB::table('konfigurasi_jk_dept_detail')->where('kode_jk_dept', $kode_jk_dept)->delete();
+            for ($i = 0; $i < count($hari); $i++) {
+                $data[] = [
+                    'kode_jk_dept' => $kode_jk_dept,
+                    'hari' => $hari[$i],
+                    'kode_jam_kerja' => $kode_jam_kerja[$i]
+                ];
+            }
+            Setjamkerjadept::insert($data);
+            DB::commit();
+
+            return redirect('/konfigurasi/jamkerjadept')->with(['success' => 'Data Berhasil Disimpan!']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect('/konfigurasi/jamkerjadept')->with(['warning' => 'Data Gagal Disimpan!']);
+        }
+    }
+
+    public function showjamkerjadept($kode_jk_dept)
+    {
+        $jam_kerja = DB::table('jam_kerja')->orderBy('nama_jam_kerja')->get();
+        $cabang = DB::table('cabang')->get();
+        $departemen = DB::table('departemen')->get();
+        $jamkerjadept = DB::table('konfigurasi_jk_dept')->where('kode_jk_dept', $kode_jk_dept)->first();
+        $jamkerjadept_detail = DB::table('konfigurasi_jk_dept_detail')
+            ->join('jam_kerja', 'konfigurasi_jk_dept_detail.kode_jam_kerja', '=', 'jam_kerja.kode_jam_kerja')
+            ->where('kode_jk_dept', $kode_jk_dept)->get();
+        return view('konfigurasi.showjamkerjadept', compact('jam_kerja', 'cabang', 'departemen', 'jamkerjadept', 'jamkerjadept_detail'));
+    }
+
+    public function deletejamkerjadept($kode_jk_dept)
+    {
+        try {
+            DB::table('konfigurasi_jk_dept')->where('kode_jk_dept', $kode_jk_dept)->delete();
+            return Redirect::back()->with(['success' => 'Data Berhasil Dihapus!']);
+        } catch (\Throwable $th) {
+            return Redirect::back()->with(['warning' => 'Data Gagal  Dihapus!']);
         }
     }
 }

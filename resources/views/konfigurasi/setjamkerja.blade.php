@@ -112,6 +112,32 @@
                                         </select>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>Sabtu
+                                        <input type="hidden" name="hari[]" value="Sabtu">
+                                    </td>
+                                    <td>
+                                        <select name="kode_jam_kerja[]" id="kode_jam_kerja" class="form-select">
+                                            <option value="">Pilih Jam Kerja</option>
+                                            @foreach ($jam_kerja as $d)
+                                                <option value="{{ $d->kode_jam_kerja }}">{{ $d->nama_jam_kerja }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Minggu
+                                        <input type="hidden" name="hari[]" value="Minggu">
+                                    </td>
+                                    <td>
+                                        <select name="kode_jam_kerja[]" id="kode_jam_kerja" class="form-select">
+                                            <option value="">Pilih Jam Kerja</option>
+                                            @foreach ($jam_kerja as $d)
+                                                <option value="{{ $d->kode_jam_kerja }}">{{ $d->nama_jam_kerja }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <button class="btn btn-primary w-100" type="submit">Submit</button>

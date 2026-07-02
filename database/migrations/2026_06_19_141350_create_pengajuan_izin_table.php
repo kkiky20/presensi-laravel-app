@@ -12,12 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengajuan_izin', function (Blueprint $table) {
-            $table->id('id');
-            $table->char('nik', 6);
-            $table->date('tgl_izin');
-            $table->char('status', 1)->comment('i = izin, s = sakit');
-            $table->string('keterangan', 255);
-            $table->char('status_approved', 1)->comment('0 = Pending, 1 = Disetujui, 2 = Ditolak')->default('0');
+            $table->char('kode_izin', 9)->primary();
+            $table->char('nik', 6)->nullable();
+            $table->date('tgl_izin_dari')->nullable();
+            $table->date('tgl_izin_sampai')->nullable();
+            $table->char('status', 1)->comment('i = izin, s = sakit')->nullable();
+            $table->string('keterangan', 255)->nullable();
+            $table->string('doc_sid', 10)->nullable();
+            $table->char('status_approved', 1)->comment('0 = Pending, 1 = Disetujui, 2 = Ditolak')->default('0')->nullable();
             $table->timestamps();
         });
     }

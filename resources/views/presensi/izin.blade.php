@@ -10,57 +10,191 @@
         <div class="pageTitle">Data Izin / Sakit</div>
         <div class="right"></div>
     </div>
+
+    <style>
+        .historicard {
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .historicontent {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .left-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .iconpresensi {
+            margin-right: 12px;
+        }
+
+        .datapresensi h5 {
+            margin-bottom: 3px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .datapresensi small {
+            color: #6c757d;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .datapresensi p {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .status {
+            text-align: right;
+            min-width: 90px;
+        }
+
+        .status p {
+            margin-top: 8px;
+            margin-bottom: 0;
+            font-weight: bold;
+            font-size: 13px;
+        }
+    </style>
 @endsection
 
 @section('content')
-    <div class="row" style="margin-top: 70px">
+    <div class="row" style="margin-top:70px">
         <div class="col">
-            @php
-                $messagesuccess = Session::get('success');
-                $messageerror = Session::get('error');
-            @endphp
+
             @if (Session::get('success'))
                 <div class="alert alert-success">
-                    {{ $messagesuccess }}
+                    {{ Session::get('success') }}
                 </div>
             @endif
+
             @if (Session::get('error'))
                 <div class="alert alert-danger">
-                    {{ $messageerror }}
+                    {{ Session::get('error') }}
                 </div>
             @endif
+
         </div>
     </div>
+
     <div class="row">
         <div class="col">
+
             @foreach ($dataizin as $d)
-                <ul class="listview image-listview">
-                    <li>
-                        <div class="item">
-                            <div class="in">
-                                <div>
-                                    <div>{{ date('d-m-Y', strtotime($d->tgl_izin)) }}
-                                        ({{ $d->status == 's' ? 'Sakit' : 'Izin' }})
-                                    </div>
-                                    <small class="text-muted">{{ $d->keterangan }}</small>
+                @php
+                    if ($d->status == 'i') {
+                        $status = 'Izin';
+                    } elseif ($d->status == 's') {
+                        $status = 'Sakit';
+                    } elseif ($d->status == 'c') {
+                        $status = 'Cuti';
+                    } else {
+                        $status = 'Data Tidak Ditemukan';
+                    }
+                @endphp
+
+                <div class="card historicard">
+                    <div class="card-body">
+
+                        <div class="historicontent">
+
+                            <div class="left-content">
+
+                                <div class="iconpresensi">
+                                    @if ($d->status == 'i')
+                                        <ion-icon name="document-outline" style="font-size:48px;color:#2196F3;">
+                                        </ion-icon>
+                                    @elseif ($d->status == 's')
+                                        <ion-icon name="medkit-outline" style="font-size:48px;color:red;"></ion-icon>
+                                    @endif
                                 </div>
-                                @if ($d->status_approved == 0)
-                                    <span class="badge bg-warning">Waiting</span>
-                                @elseif ($d->status_approved == 1)
-                                    <span class="badge bg-success">Approved</span>
-                                @elseif ($d->status_approved == 2)
-                                    <span class="badge bg-danger">Decline</span>
-                                @endif
+
+                                <div class="datapresensi">
+                                    <h5>
+                                        {{ date('d-m-Y', strtotime($d->tgl_izin_dari)) }}
+                                        ({{ $status }})
+                                    </h5>
+
+                                    <small>
+                                        {{ date('d-m-Y', strtotime($d->tgl_izin_dari)) }}
+                                        s/d
+                                        {{ date('d-m-Y', strtotime($d->tgl_izin_sampai)) }}
+                                    </small>
+
+                                    <p>{{ $d->keterangan }}</p>
+
+                                    <p>
+                                        @if (!empty($d->doc_sid))
+                                        <span style="color:blue">
+                                            <ion-icon name="document-attach-outline"></ion-icon> Lihat SID
+                                        </span>
+                                        @endif
+                                    </p>
+                                </div>
+
                             </div>
+
+                            <div class="status">
+
+                                @if ($d->status_approved == 0)
+                                    <span class="badge bg-warning">
+                                        Pending
+                                    </span>
+                                @elseif ($d->status_approved == 1)
+                                    <span class="badge bg-success">
+                                        Disetujui
+                                    </span>
+                                @elseif ($d->status_approved == 2)
+                                    <span class="badge bg-danger">
+                                        Ditolak
+                                    </span>
+                                @endif
+
+                                <p>
+                                    {{ hitunghari($d->tgl_izin_dari, $d->tgl_izin_sampai) }}
+                                    Hari
+                                </p>
+
+                            </div>
+
                         </div>
-                    </li>
-                </ul>
+
+                    </div>
+                </div>
             @endforeach
+
         </div>
     </div>
-    <div class="fab-button bottom-right" style="margin-bottom: 70px">
-        <a href="/presensi/buatizin" class="fab">
+
+    <div class="fab-button animate bottom-right dropdown" style="margin-bottom:70px">
+
+        <a href="#" class="fab bg-primary" data-toggle="dropdown">
             <ion-icon name="add-outline"></ion-icon>
         </a>
+
+        <div class="dropdown-menu">
+
+            <a class="dropdown-item bg-primary" href="/izinabsen">
+                <ion-icon name="document-outline"></ion-icon>
+                <p>Izin Absen</p>
+            </a>
+
+            <a class="dropdown-item bg-primary" href="/izinsakit">
+                <ion-icon name="medkit-outline"></ion-icon>
+                <p>Sakit</p>
+            </a>
+
+            <a class="dropdown-item bg-primary" href="/izincuti">
+                <ion-icon name="calendar-outline"></ion-icon>
+                <p>Cuti</p>
+            </a>
+
+        </div>
+
     </div>
 @endsection
