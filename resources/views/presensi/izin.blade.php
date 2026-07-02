@@ -85,6 +85,11 @@
     <div class="row">
         <div class="col">
 
+            @if ($dataizin->isEmpty())
+                <div class="alert alert-warning">
+                    <p>Data Kosong</p>
+                </div>
+            @endif
             @foreach ($dataizin as $d)
                 @php
                     if ($d->status == 'i') {
@@ -98,7 +103,8 @@
                     }
                 @endphp
 
-                <div class="card historicard">
+                <div class="card historicard card_izin" kode_izin="{{ $d->kode_izin }}" data-toggle="modal"
+                    data-target="#actionSheetIconed">
                     <div class="card-body">
 
                         <div class="historicontent">
@@ -111,6 +117,8 @@
                                         </ion-icon>
                                     @elseif ($d->status == 's')
                                         <ion-icon name="medkit-outline" style="font-size:48px;color:red;"></ion-icon>
+                                    @elseif ($d->status == 'c')
+                                        <ion-icon name="calendar-outline" style="font-size:48px;color:yellow;"></ion-icon>
                                     @endif
                                 </div>
 
@@ -129,10 +137,16 @@
                                     <p>{{ $d->keterangan }}</p>
 
                                     <p>
+                                        @if ($d->status == 'c')
+                                            <span class="badge bg-warning">{{ $d->nama_cuti }}</span>
+                                        @endif
+                                    </p>
+
+                                    <p>
                                         @if (!empty($d->doc_sid))
-                                        <span style="color:blue">
-                                            <ion-icon name="document-attach-outline"></ion-icon> Lihat SID
-                                        </span>
+                                            <span style="color:blue">
+                                                <ion-icon name="document-attach-outline"></ion-icon> Lihat SID
+                                            </span>
                                         @endif
                                     </p>
                                 </div>
@@ -197,4 +211,28 @@
         </div>
 
     </div>
+
+    <div class="modal fade action-sheet" id="actionSheetIconed" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Aksi</h5>
+                </div>
+                <div class="modal-body" id="showact">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
+@push('myscript')
+    <script>
+        $(function() {
+            $(".card_izin").click(function(e) {
+                var kode_izin = $(this).attr("kode_izin");
+                $("#showact").load('/izin/' + kode_izin + '/showact');
+            });
+        });
+    </script>
+@endpush

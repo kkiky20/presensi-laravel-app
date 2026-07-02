@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class IzinabsenController extends Controller
 {
@@ -36,6 +37,7 @@ class IzinabsenController extends Controller
         $kode_izin = buatkode($lastkodeizin, $format, 3);
 
         $data = [
+            'kode_izin' => $kode_izin,
             'nik' => $nik,
             'tgl_izin_dari' => $tgl_izin_dari,
             'tgl_izin_sampai' => $tgl_izin_sampai,
@@ -49,6 +51,35 @@ class IzinabsenController extends Controller
             return redirect('/presensi/izin')->with(['success' => 'Data Berhasil Disimpan!']);
         } else {
             return redirect('/presensi/izin')->with(['error' => 'Data Gagal Disimpan!']);
+        }
+    }
+
+    public function edit($kode_izin)
+    {
+        $dataizin = DB::table('pengajuan_izin')->where('kode_izin', $kode_izin)->first();
+        return view('izin.edit', compact('dataizin'));
+    }
+
+    public function update($kode_izin, Request $request)
+    {
+        $tgl_izin_dari = $request->tgl_izin_dari;
+        $tgl_izin_sampai = $request->tgl_izin_sampai;
+        $keterangan = $request->keterangan;
+
+        try {
+            $data = [
+                'tgl_izin_dari'    => $tgl_izin_dari,
+                'tgl_izin_sampai'  => $tgl_izin_sampai,
+                'keterangan'       => $keterangan
+            ];
+
+            DB::table('pengajuan_izin')
+                ->where('kode_izin', $kode_izin)
+                ->update($data);
+
+            return redirect('/presensi/izin')->with(['success' => 'Data Berhasil Disimpan']);
+        } catch (\Exception $e) {
+            return redirect('/presensi/izin')->with(['success' => 'Data Berhasil Disimpan']);
         }
     }
 }

@@ -17,8 +17,9 @@ return new class extends Migration
             $table->date('tgl_izin_dari')->nullable();
             $table->date('tgl_izin_sampai')->nullable();
             $table->char('status', 1)->comment('i = izin, s = sakit')->nullable();
+            $table->char('kode_cuti', 3)->nullable();
             $table->string('keterangan', 255)->nullable();
-            $table->string('doc_sid', 10)->nullable();
+            $table->string('doc_sid', 255)->nullable();
             $table->char('status_approved', 1)->comment('0 = Pending, 1 = Disetujui, 2 = Ditolak')->default('0')->nullable();
             $table->timestamps();
         });

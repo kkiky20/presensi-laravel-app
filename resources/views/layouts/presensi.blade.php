@@ -22,6 +22,23 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
+    <style>
+        .selectmaterialize {
+            display: block;
+            background-color: transparent !important;
+            border: 0px !important;
+            border-bottom: 1px solid #9e9e9e !important;
+            border-radius: 0 !important;
+            outline: none !important;
+            height: 3rem !important;
+            width: 100% !important;
+            font-size: 16px !important;
+            margin: 0 0 8px 0 !important;
+            padding: 0 !important;
+            color: #495057;
+        }
+    </style>
+
 </head>
 
 <body style="background-color:#e9ecef;">

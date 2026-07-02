@@ -157,7 +157,7 @@
                     <div class="card">
                         <div class="card-body text-center" style="padding: 12px 12px !important; line-height: 0.8rem">
                             <span class="badge bg-danger"
-                                style="position: absolute; top: 3px; right:10px; font-size: 0.6rem;z-index:999">{{ $rekapizin->jmlizin }}
+                                style="position: absolute; top: 3px; right:10px; font-size: 0.6rem;z-index:999">{{ $rekapizin->jmlizin != null ? $rekapizin->jmlizin : 0 }}
                             </span>
                             <ion-icon name="newspaper-outline" style="font-size: 1.6rem"
                                 class="text-success mb-1"></ion-icon>
@@ -169,7 +169,7 @@
                     <div class="card">
                         <div class="card-body text-center" style="padding: 12px 12px !important; line-height: 0.8rem">
                             <span class="badge bg-danger"
-                                style="position: absolute; top: 3px; right:10px; font-size: 0.6rem;z-index:999">{{ $rekapizin->jmlsakit }}
+                                style="position: absolute; top: 3px; right:10px; font-size: 0.6rem;z-index:999">{{ $rekapizin->jmlsakit != null ? $rekapizin->jmlsakit : 0 }}
                             </span>
                             <ion-icon name="medkit-outline" style="font-size: 1.6rem"
                                 class="text-warning mb-1"></ion-icon>
@@ -241,6 +241,11 @@
                             margin-left: 10px;
                         }
                     </style>
+                    @if ($historibulanini->isEmpty())
+                        <div class="alert alert-warning">
+                            <p>Data Kosong</p>
+                        </div>
+                    @endif
                     @foreach ($historibulanini as $d)
                         <div class="card historicard mb-1">
                             <div class="card-body">
@@ -293,6 +298,11 @@
                     @endforeach
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel">
+                    @if ($leaderboard->isEmpty())
+                        <div class="alert alert-warning">
+                            <p>Data Kosong</p>
+                        </div>
+                    @endif
                     <ul class="listview image-listview">
                         @foreach ($leaderboard as $d)
                             <li>
